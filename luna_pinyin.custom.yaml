@@ -1,0 +1,11 @@
+# luna_pinyin.custom.yaml
+patch:
+  switches/@after last:
+    name: show_emoji
+    reset: 1
+    states: [ "🈚️️\uFE0E", "🈶️️\uFE0F" ]
+  engine/filters/@after last:
+    simplifier@emoji_conversion
+  emoji_conversion:
+    opencc_config: emoji.json
+    option_name: show_emoji
