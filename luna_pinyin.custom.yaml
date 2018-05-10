@@ -9,3 +9,4 @@ patch:
   emoji_conversion:
     opencc_config: emoji.json
     option_name: show_emoji
+    tips: all
