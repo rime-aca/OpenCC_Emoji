@@ -1,0 +1,28 @@
+# encoding: utf-8
+---
+recipe:
+  Rx: emoji-suggestion
+  args:
+    - schema=luna_pinyin
+    - opt_extra_argument
+  description: >-
+    Show emoji suggestion with OpenCC
+  # excludes:
+  # includes:
+  install_files: >-
+    opencc/*.*
+  patch_files:
+    - recipe.yaml: ${schema:-luna_pinyin}.custom.yaml
+    - default.custom.yaml
+
+patch:
+  switches/@after last:
+    name: show_emoji
+    reset: 1
+    states: [ "🈚️️\uFE0E", "🈶️️\uFE0F" ]
+  engine/filters/@after last:
+    simplifier@emoji_conversion
+  emoji_conversion:
+    opencc_config: emoji.json
+    option_name: show_emoji
+    tips: all
