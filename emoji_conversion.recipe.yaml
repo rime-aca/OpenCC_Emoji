@@ -1,26 +1,25 @@
+# emoji_conversion.recipe.yaml
 # encoding: utf-8
+
 ---
 recipe:
-  Rx: emoji-suggestion
+  Rx: emoji_conversion
   args:
     - schema=luna_pinyin
-    - opt_extra_argument
   description: >-
-    Show emoji suggestion with OpenCC
-  # excludes:
-  # includes:
-  install_files: >-
-    opencc/*.*
-  patch_files:
-    - recipe.yaml: ${schema:-luna_pinyin}.custom.yaml
-    - default.custom.yaml
+    Customize input schema to type emoji with OpenCC  # excludes:
+
+patch_files:
+  ${schema:-luna_pinyin}.custom.yaml:
+    - patch/+:
+        __include: emoji_conversion.recipe:/patch
 
 patch:
-  switches/@after last:
+  switches/@next:
     name: show_emoji
     reset: 1
     states: [ "🈚️️\uFE0E", "🈶️️\uFE0F" ]
-  engine/filters/@after last:
+  engine/filters/@next:
     simplifier@emoji_conversion
   emoji_conversion:
     opencc_config: emoji.json
